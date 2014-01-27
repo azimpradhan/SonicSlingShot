@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8642C2CB1891F82000E4D7FE"
-               BuildableName = "GLamorHD2.app"
+               BuildableName = "SonicSlingShot.app"
                BlueprintName = "SonicSlingShot"
                ReferencedContainer = "container:SonicSlingShot.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8642C2F71891F82000E4D7FE"
-               BuildableName = "GLamorHD2Tests.xctest"
+               BuildableName = "SonicSlingShotTests.xctest"
                BlueprintName = "SonicSlingShotTests"
                ReferencedContainer = "container:SonicSlingShot.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8642C2CB1891F82000E4D7FE"
-            BuildableName = "GLamorHD2.app"
+            BuildableName = "SonicSlingShot.app"
             BlueprintName = "SonicSlingShot"
             ReferencedContainer = "container:SonicSlingShot.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8642C2CB1891F82000E4D7FE"
-            BuildableName = "GLamorHD2.app"
+            BuildableName = "SonicSlingShot.app"
             BlueprintName = "SonicSlingShot"
             ReferencedContainer = "container:SonicSlingShot.xcodeproj">
          </BuildableReference>
@@ -80,7 +80,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8642C2CB1891F82000E4D7FE"
-            BuildableName = "GLamorHD2.app"
+            BuildableName = "SonicSlingShot.app"
             BlueprintName = "SonicSlingShot"
             ReferencedContainer = "container:SonicSlingShot.xcodeproj">
          </BuildableReference>

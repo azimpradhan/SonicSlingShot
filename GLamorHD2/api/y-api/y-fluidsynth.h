@@ -37,7 +37,8 @@
 #define __MCD_Y_FLUIDSYNTH_H__
 
 #include "fluidsynth.h"
-#include "x-thread.h"
+//#include "x-thread.h"
+#include "mo_thread.h"
 
 
 
@@ -77,7 +78,8 @@ public:
 protected:
     fluid_settings_t * m_settings;
     fluid_synth_t * m_synth;
-    XMutex m_mutex;
+    //XMutex m_mutex;
+    MoMutex m_mutex;
 };
 
 

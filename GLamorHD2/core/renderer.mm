@@ -10,6 +10,7 @@
 #import "mo_audio.h"
 #import "mo_gfx.h"
 #import "mo_touch.h"
+//#import "Mandolin.h"
 #import <vector>
 using namespace std;
 
@@ -23,6 +24,8 @@ using namespace std;
 GLfloat g_waveformWidth = 2;
 GLfloat g_gfxWidth = 1024;
 GLfloat g_gfxHeight = 640;
+//stk::Mandolin *g_mandolin;
+
 
 // buffer
 SAMPLE g_vertices[FRAMESIZE*2];
@@ -77,12 +80,22 @@ public:
     Vector3D col;
     GLfloat alpha;
     GLboolean active;
-    UITouch *touchEvent;
-    UIView *view;
 
 };
+class RubberBand : public Entity
+{
+    virtual void update (double dt){
+        
+    }
+    virtual void render (){
+        
+    }
+public:
+    int numPoints;
+    GLfloat lineCoords[6];
+};
 
-class Dude : public Entity
+class SlingEnd : public Entity
 {
     // update
     virtual void update( double dt )
@@ -146,17 +159,24 @@ class Dude : public Entity
         glDisable( GL_BLEND );
         glDisable( GL_TEXTURE_2D );
     }
+public:
+    UITouch *touchEvent;
+    UIView *view;
 };
 
 // Entity * g_entities[NUM_ENTITIES];
 
 std::vector<Entity *> g_entities;
+std::vector<SlingEnd *> g_sling_ends;
+Entity *g_fingerProjectile = NULL;
+
+RubberBand *g_rubber_band = new RubberBand();
 
 // function prototypes
 void renderWaveform();
 void renderEntities();
 Entity * getFreeEntity();
-
+void renderRubberBand();
 
 
 
@@ -186,6 +206,9 @@ void audio_callback( Float32 * buffer, UInt32 numFrames, void * userData )
         g_vertices[2*i+1] = buffer[2*i] * 2;
         // zero
         buffer[2*i] = buffer[2*i+1] = 0;
+        //buffer[2*i] = buffer[2*i+1] =  g_mandolin->tick();
+
+
     }
     
     // save the num frames
@@ -211,7 +234,7 @@ void touch_callback( NSSet * touches, UIView * view,
     
     // number of touches in set
     NSUInteger n = [touches count];
-    NSLog( @"total number of touches: %d", n );
+    //NSLog( @"total number of touches: %d", n );
     
     // iterate over all touch events
     for( UITouch * touch in touches )
@@ -220,9 +243,6 @@ void touch_callback( NSSet * touches, UIView * view,
         pt = [touch locationInView:view];
         prev = [touch previousLocationInView:view];
         
-        //GLfloat ratio = g_gfxWidth / g_gfxHeight;
-        //GLfloat x = (pt.y / g_gfxWidth * 2 * ratio) - ratio;
-        //GLfloat y = (pt.x / g_gfxHeight * 2 ) - 1;
         
         // check the touch phase
         switch( touch.phase )
@@ -233,8 +253,9 @@ void touch_callback( NSSet * touches, UIView * view,
                 //NSLog( @"number: %d", g_entities.size() );
 
                 // find a free one
-                if (g_entities.size() == 2){
-                    Entity * e = new Dude();
+                if (g_sling_ends.size() == 2 && g_fingerProjectile == NULL){
+                    Entity * e = new SlingEnd();
+                    g_fingerProjectile = e;
                     // check
                     if( e != NULL )
                     {
@@ -247,21 +268,22 @@ void touch_callback( NSSet * touches, UIView * view,
                         // set color
                         e->col.set( 1, 0, 0 );
                         // set scale
-                        e->sca.setAll( .9 );
-                        e->touchEvent = touch;
-                        e->view = view;
+                        e->sca.setAll( .65 );
+                        ((SlingEnd *)e)->touchEvent = touch;
+                        ((SlingEnd *)e)->view = view;
                     }
                     
                     
                 }
-                else if (g_entities.size() < 2){
+                else if (g_sling_ends.size() < 2){
                     
                     
-                    Entity * e = new Dude();
+                    Entity * e = new SlingEnd();
                     // check
                     if( e != NULL )
                     {
                         // append
+                        g_sling_ends.push_back((SlingEnd *)e);
                         g_entities.push_back( e );
                         // active
                         e->active = true;
@@ -272,9 +294,9 @@ void touch_callback( NSSet * touches, UIView * view,
                         // set color
                         e->col.set( .5, 1, .5 );
                         // set scale
-                        e->sca.setAll( .9 );
-                        e->touchEvent = touch;
-                        e->view = view;
+                        e->sca.setAll( .65 );
+                        ((SlingEnd *)e)->touchEvent = touch;
+                        ((SlingEnd *)e)->view = view;
                     }
                 }
                 
@@ -282,59 +304,23 @@ void touch_callback( NSSet * touches, UIView * view,
             }
             case UITouchPhaseStationary:
             {
-                //NSLog( @"touch stationary... %f %f", pt.x, pt.y );
+                NSLog( @"touch stationary... %f %f", pt.x, pt.y );
                 break;
             }
             case UITouchPhaseMoved:
             {
-                // NSLog( @"touch moved... %f %f", pt.x, pt.y );
-                // find a free one
-//                Entity * e = new Dude();
-//                // check
-//                if( e != NULL )
-//                {
-//                    // append
-//                    g_entities.push_back( e );
-//                    // active
-//                    e->active = true;
-//                    // reset transparency
-//                    e->alpha = 1.0;
-//                    // set location
-//                    e->loc.set( x, y, 0 );
-//                    // set color
-//                    e->col.set( 1, 1, 1 );
-//                    // set scale
-//                    e->sca.setAll( .04 );
-//                }
+
                 break;
             }
                 // ended or cancelled
             case UITouchPhaseEnded:
             {
-                // NSLog( @"touch ended... %f %f", pt.x, pt.y );
-                // find a free one
-//                Entity * e = new Dude();
-//                // check
-//                if( e != NULL )
-//                {
-//                    // append
-//                    g_entities.push_back( e );
-//                    // active
-//                    e->active = true;
-//                    // reset transparency
-//                    e->alpha = 1.0;
-//                    // set location
-//                    e->loc.set( x, y, 0 );
-//                    // set color
-//                    e->col.set( 1, .5, .5 );
-//                    // set scale
-//                    e->sca.setAll( .1 );
-//                }
+
                 break;
             }
             case UITouchPhaseCancelled:
             {
-//                NSLog( @"touch cancelled... %f %f", pt.x, pt.y );
+                NSLog( @"touch cancelled... %f %f", pt.x, pt.y );
                 break;
             }
                 // should not get here
@@ -347,7 +333,7 @@ void touch_callback( NSSet * touches, UIView * view,
 // initialize the engine (audio, grx, interaction)
 void GLamorInit()
 {
-    NSLog( @"init..." );
+    //NSLog( @"init..." );
     
     
     // generate texture name
@@ -367,7 +353,8 @@ void GLamorInit()
         // set touch callback
         MoTouch::addCallback( touch_callback, NULL );
         
-        
+        //g_mandolin = new stk::Mandolin(440.0);
+        //g_mandolin->setFrequency(440.0);
         
         // init
         bool result = MoAudio::init( SRATE, FRAMESIZE, NUM_CHANNELS );
@@ -387,12 +374,14 @@ void GLamorInit()
         }
     }
     
+
+    
 }
 
 // set graphics dimensions
 void GLamorSetDims( GLfloat width, GLfloat height )
 {
-    NSLog( @"set dims: %f %f", width, height );
+    //NSLog( @"set dims: %f %f", width, height );
     g_gfxWidth = width;
     g_gfxHeight = height;
     
@@ -427,21 +416,73 @@ void GLamorRender()
 
     // entities
     renderEntities();
+    
+
 
     // waveform
     renderWaveform();
+    
+    //rubberband
+    renderRubberBand();
+    
+
 
     // pop
     glPopMatrix();
 }
 
+void renderRubberBand(){
+    if (g_fingerProjectile == NULL && g_sling_ends.size() == 2){
+        GLfloat bandCoords[4];
+        SlingEnd *first = g_sling_ends.front();
+        SlingEnd *last = g_sling_ends.back();
+        bandCoords[0] = first->loc.x;
+        bandCoords[1] = first->loc.y;
+        bandCoords[2] = last->loc.x;
+        bandCoords[3] = last->loc.y;
+        glVertexPointer( 2, GL_FLOAT, 0, bandCoords );
+        glEnableClientState( GL_VERTEX_ARRAY );
+        
+        // color
+        glColor4f( 1, 1, 0, 1 );
+        // draw the thing
+        glDrawArrays( GL_LINE_STRIP, 0, 2);
+    }
+    else if (g_fingerProjectile != NULL && g_sling_ends.size() == 2){
+        GLfloat bandCoords[6];
+        SlingEnd *first = g_sling_ends.front();
+        SlingEnd *last = g_sling_ends.back();
 
+        
+        bandCoords[0] = first->loc.x;
+        bandCoords[1] = first->loc.y;
+        bandCoords[2] = g_fingerProjectile->loc.x;
+        bandCoords[3] = g_fingerProjectile->loc.y;
+        bandCoords[4] = last->loc.x;
+        bandCoords[5] = last->loc.y;
+        
+        
+        glVertexPointer( 2, GL_FLOAT, 0, bandCoords );
+        glEnableClientState( GL_VERTEX_ARRAY );
+        
+        // color
+        glColor4f( 1, 1, 0, 1 );
+        // draw the thing
+        glDrawArrays( GL_LINE_STRIP, 0, 3);
+        
+    }
+    
+}
 
 
 void renderWaveform()
 {
+    glPushMatrix();
+    
     // center it
-    glTranslatef( -g_waveformWidth / 2, 0, 0 );
+    glTranslatef( -g_waveformWidth / 2, 0.75, 0 );
+    
+    glScalef(0.3, 0.3, 1.0);
     
     // set the vertex array pointer
     glVertexPointer( 2, GL_FLOAT, 0, g_vertices );
@@ -456,15 +497,41 @@ void renderWaveform()
     glColor4f( 0, 1, 0, 1 );
     // draw the thing
     glDrawArrays( GL_LINE_STRIP, g_numFrames/2-1, g_numFrames/2 );
+    glPopMatrix();
+
 }
 
 void renderEntities()
 {
-    NSLog(@"I am in update! num_entities is %lu", g_entities.size());
-    vector<Entity *>::iterator e;
-    // loop over all entities (active or not)
 
+    vector<Entity *>::iterator e;
+    vector<SlingEnd *>::iterator s;
     
+    if (g_fingerProjectile != NULL && !g_fingerProjectile->active){
+        
+        
+        if (g_sling_ends.size() == 2) NSLog(@"Pluck!");
+        //if (g_sling_ends.size() == 2) g_mandolin->pluck(1.0, 0.5);
+        g_fingerProjectile = NULL;
+        
+    }
+
+    for (s = g_sling_ends.begin(); s != g_sling_ends.end();){
+        if (!(*s)->active){
+            s = g_sling_ends.erase(s);
+        }
+        else{
+            ++s;
+        }
+    }
+    if (g_fingerProjectile != NULL && g_sling_ends.size() < 2){
+        vector<SlingEnd *>::iterator i;
+        for (i = g_sling_ends.begin(); i != g_sling_ends.end(); i++){
+            (*i)->active = FALSE;
+        }
+        g_fingerProjectile->active = FALSE;
+        
+    }
     for( e = g_entities.begin(); e != g_entities.end(); /*e++*/ )
     {
         // check if active
@@ -473,8 +540,6 @@ void renderEntities()
             // delete
             delete (*e);
             e = g_entities.erase( e );
-            //if( g_entities.size() == 0 ) break;
-            //continue;
         }
         else{
             (*e)->update( MoGfx::delta() );

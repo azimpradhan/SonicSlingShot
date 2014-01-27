@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0593FEA81895B58A00C29C86 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0593FEA71895B58A00C29C86 /* SettingsViewController.m */; };
+		0593FEE71896297100C29C86 /* rocking8m11e.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 0593FEE61896297100C29C86 /* rocking8m11e.sf2 */; };
 		8642C2D01891F82000E4D7FE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8642C2CF1891F82000E4D7FE /* Foundation.framework */; };
 		8642C2D21891F82000E4D7FE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8642C2D11891F82000E4D7FE /* CoreGraphics.framework */; };
 		8642C2D41891F82000E4D7FE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8642C2D31891F82000E4D7FE /* UIKit.framework */; };
@@ -51,6 +52,7 @@
 /* Begin PBXFileReference section */
 		0593FEA61895B58A00C29C86 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsViewController.h; path = GLamorHD2/data/SettingsViewController.h; sourceTree = "<group>"; };
 		0593FEA71895B58A00C29C86 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsViewController.m; path = GLamorHD2/data/SettingsViewController.m; sourceTree = "<group>"; };
+		0593FEE61896297100C29C86 /* rocking8m11e.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = rocking8m11e.sf2; sourceTree = "<group>"; };
 		8642C2CC1891F82000E4D7FE /* SonicSlingShot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SonicSlingShot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8642C2CF1891F82000E4D7FE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8642C2D11891F82000E4D7FE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -123,6 +125,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0593FEE51896297100C29C86 /* sfonts */ = {
+			isa = PBXGroup;
+			children = (
+				0593FEE61896297100C29C86 /* rocking8m11e.sf2 */,
+			);
+			path = sfonts;
+			sourceTree = "<group>";
+		};
 		8642C2C31891F82000E4D7FE = {
 			isa = PBXGroup;
 			children = (
@@ -251,6 +261,7 @@
 		8642C35D1891FAC200E4D7FE /* data */ = {
 			isa = PBXGroup;
 			children = (
+				0593FEE51896297100C29C86 /* sfonts */,
 				8642C35E1891FAC200E4D7FE /* textures */,
 			);
 			name = data;
@@ -342,6 +353,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0593FEE71896297100C29C86 /* rocking8m11e.sf2 in Resources */,
 				8642C3601891FAC200E4D7FE /* texture.png in Resources */,
 				8642C2EA1891F82000E4D7FE /* Main_iPad.storyboard in Resources */,
 				8642C2E71891F82000E4D7FE /* Main_iPhone.storyboard in Resources */,
@@ -517,6 +529,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GLamorHD2/SonicSlingShot-Prefix.pch";
 				INFOPLIST_FILE = "GLamorHD2/SonicSlingShot-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/Azim/Music256b/Assignment2/SonicSlingShot/GLamorHD2/fsynth/lib,
+				);
 				PRODUCT_NAME = SonicSlingShot;
 				WRAPPER_EXTENSION = app;
 			};
@@ -530,6 +546,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GLamorHD2/SonicSlingShot-Prefix.pch";
 				INFOPLIST_FILE = "GLamorHD2/SonicSlingShot-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/Azim/Music256b/Assignment2/SonicSlingShot/GLamorHD2/fsynth/lib,
+				);
 				PRODUCT_NAME = SonicSlingShot;
 				WRAPPER_EXTENSION = app;
 			};
