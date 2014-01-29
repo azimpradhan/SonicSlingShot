@@ -84,15 +84,57 @@ public:
 
 };
 
+class TextureObject : public Entity{
+public:
+    TextureObject(GLuint texture){
+        m_texture = texture;
+        
+    }
+    
+    virtual void render(){
+        // enable texture mapping
+        glEnable( GL_TEXTURE_2D );
+        // enable blending
+        glEnable( GL_BLEND );
+        // set blend func
+        glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+        // glBlendFunc( GL_ONE, GL_ONE );
+        
+        // bind the texture
+        glBindTexture( GL_TEXTURE_2D, m_texture );
+        
+        // vertex
+        glVertexPointer( 2, GL_FLOAT, 0, squareVertices );
+        glEnableClientState(GL_VERTEX_ARRAY );
+        
+        // texture coordinate
+        glTexCoordPointer( 2, GL_FLOAT, 0, texCoords );
+        glEnableClientState( GL_TEXTURE_COORD_ARRAY );
+        
+        // triangle strip
+        glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+        
+        // disable blend
+        glDisable( GL_BLEND );
+        glDisable( GL_TEXTURE_2D );
+        
+    }
+public:
+    GLuint m_texture;
+};
 
-class SlingEnd : public Entity
-{
+class TouchObject : public TextureObject{
+
+public:
+    TouchObject(GLuint texture) : TextureObject(texture){
+        
+    }
     // update
     virtual void update( double dt )
     {
-
+        
         //NSLog(@"I am in update! Touch event is %d", this->touchEvent.phase);
-
+        
         if (this->touchEvent.phase == UITouchPhaseEnded){
             this->active = false;
         }
@@ -102,107 +144,81 @@ class SlingEnd : public Entity
             GLfloat x = (pt.y / g_gfxWidth * 2 * ratio) - ratio;
             GLfloat y = (pt.x / g_gfxHeight * 2 ) - 1;
             //NSLog(@"I am in touch phase is moved x is %f, y is %f", x, y);
-
+            
             this->loc.set( x, y, 0 );
             
         }
     }
     
-    // redner
-    virtual void render()
-    {
-        // enable texture mapping
-        glEnable( GL_TEXTURE_2D );
-        // enable blending
-        glEnable( GL_BLEND );
-        // set blend func
-        glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-        // glBlendFunc( GL_ONE, GL_ONE );
-        
-        // bind the texture
-        glBindTexture( GL_TEXTURE_2D, g_texture[0] );
-        
-        // vertex
-        glVertexPointer( 2, GL_FLOAT, 0, squareVertices );
-        glEnableClientState(GL_VERTEX_ARRAY );
-        
-        // texture coordinate
-        glTexCoordPointer( 2, GL_FLOAT, 0, texCoords );
-        glEnableClientState( GL_TEXTURE_COORD_ARRAY );
-        
-        // triangle strip
-        glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-
-        // disable blend
-        glDisable( GL_BLEND );
-        glDisable( GL_TEXTURE_2D );
-    }
 public:
     UITouch *touchEvent;
     UIView *view;
+    
+    
 };
 
+class ProjectileObject : public TextureObject{
 
-//projectile
-
-class Projectile : public SlingEnd{
-    // no update
-    virtual void render()
-    {
-        // enable texture mapping
-        glEnable( GL_TEXTURE_2D );
-        // enable blending
-        glEnable( GL_BLEND );
-        // set blend func
-        glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-        // glBlendFunc( GL_ONE, GL_ONE );
-        
-        // bind the texture
-        glBindTexture( GL_TEXTURE_2D, g_texture[1] );
-        
-        // vertex
-        glVertexPointer( 2, GL_FLOAT, 0, squareVertices );
-        glEnableClientState(GL_VERTEX_ARRAY );
-        
-        // texture coordinate
-        glTexCoordPointer( 2, GL_FLOAT, 0, texCoords );
-        glEnableClientState( GL_TEXTURE_COORD_ARRAY );
-        
-        // triangle strip
-        glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-        
-        // disable blend
-        glDisable( GL_BLEND );
-        glDisable( GL_TEXTURE_2D );
-    }
-
-    
 public:
+    ProjectileObject(GLuint texture, Vector3D velocity, Vector3D min, Vector3D max) : TextureObject(texture){
+        m_vel = velocity;
+        m_min = min;
+        m_max = max;
+        
+        
+    }
+private:
 
     
-};
+    void checkWalls(){
+        //NSLog(@"check x:%f, y: %f", this->loc.x, this->loc.y);
+        GLfloat radius = this->sca.x/2;
+        
+        if (this->loc.x - m_min.x < radius){
+            NSLog(@"bumped the left wall");
+            this->m_vel.x = -this->m_vel.x;
+        }
+        if (this->loc.y - m_min.y < radius){
+            NSLog(@"bumped the bottom wall");
+            this->m_vel.y = -this->m_vel.y;
+            
+        }
+        if (m_max.x - this->loc.x < radius){
+            NSLog(@"bumped the right wall");
+            this->m_vel.x = -this->m_vel.x;
 
-class MovingProjectile : public Projectile{
-   
+        }
+        if (m_max.y - this->loc.y < radius){
+            NSLog(@"bumped the top wall");
+            this->m_vel.y = -this->m_vel.y;
+        }
+        
+        
+    }
     
     
     virtual void update( double dt )
     {
-        this->loc.x = this->loc.x + 0.01;
+        checkWalls();
+        this->loc += m_vel*dt;
         
         
     }
-    
-    
 public:
+     Vector3D m_vel;
+     Vector3D m_min;
+     Vector3D m_max;
 };
+
 
 
 
 
 std::vector<Entity *> g_entities;
-std::vector<SlingEnd *> g_sling_ends;
-Entity *g_fingerProjectile = NULL;
+std::vector<TouchObject *> g_sling_ends;
+std::vector<ProjectileObject *>g_projectiles;
+//Entity *g_fingerProjectile = NULL;
+TouchObject *g_fingerProjectile = NULL;
 
 
 // function prototypes
@@ -240,8 +256,6 @@ void audio_callback( Float32 * buffer, UInt32 numFrames, void * userData )
         // zero
         //buffer[2*i] = buffer[2*i+1] = 0;
         buffer[2*i] = buffer[2*i+1] =  g_mandolin->tick();
-
-
     }
     
     // save the num frames
@@ -288,8 +302,8 @@ void touch_callback( NSSet * touches, UIView * view,
                 // find a free one
                 if (g_sling_ends.size() == 2 && g_fingerProjectile == NULL){
                     //create a projectile instead
-                    Entity * e = new Projectile();
-                    g_fingerProjectile = e;
+                    Entity * e = new TouchObject(g_texture[1]);
+                    g_fingerProjectile = (TouchObject *)e;
                     // check
                     if( e != NULL )
                     {
@@ -302,22 +316,22 @@ void touch_callback( NSSet * touches, UIView * view,
                         // set color
                         e->col.set( 1, 0, 0 );
                         // set scale
-                        e->sca.setAll( .65 );
-                        ((Projectile *)e)->touchEvent = touch;
-                        ((Projectile *)e)->view = view;
+                        e->sca.setAll(.5);
+                        ((TouchObject *)e)->touchEvent = touch;
+                        ((TouchObject *)e)->view = view;
                     }
                     
                     
                 }
                 else if (g_sling_ends.size() < 2){
                     
-                    
-                    Entity * e = new SlingEnd();
+                    //sling end
+                    Entity * e = new TouchObject(g_texture[0]);
                     // check
                     if( e != NULL )
                     {
                         // append
-                        g_sling_ends.push_back((SlingEnd *)e);
+                        g_sling_ends.push_back((TouchObject *)e);
                         g_entities.push_back( e );
                         // active
                         e->active = true;
@@ -329,8 +343,8 @@ void touch_callback( NSSet * touches, UIView * view,
                         e->col.set( .5, 1, .5 );
                         // set scale
                         e->sca.setAll( .65 );
-                        ((SlingEnd *)e)->touchEvent = touch;
-                        ((SlingEnd *)e)->view = view;
+                        ((TouchObject *)e)->touchEvent = touch;
+                        ((TouchObject *)e)->view = view;
                     }
                 }
                 
@@ -371,14 +385,14 @@ void GLamorInit()
     
     
     // generate texture name
-    glGenTextures( 1, &g_texture[0] );
+    glGenTextures( 2, &g_texture[0] );
     // bind the texture
     glBindTexture( GL_TEXTURE_2D, g_texture[0] );
     // setting parameters
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
     // load the texture
-    MoGfx::loadTexture( @"texture", @"png" );
+    MoGfx::loadTexture( @"SlingEnd", @"png" );
     
     
     // bind the texture
@@ -387,7 +401,7 @@ void GLamorInit()
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
     // load the texture
-    MoGfx::loadTexture( @"stanford", @"png" );
+    MoGfx::loadTexture( @"Projectile", @"png" );
     
     
     static bool initialized = NO;
@@ -479,8 +493,8 @@ void GLamorRender()
 void renderRubberBand(){
     if (g_fingerProjectile == NULL && g_sling_ends.size() == 2){
         GLfloat bandCoords[4];
-        SlingEnd *first = g_sling_ends.front();
-        SlingEnd *last = g_sling_ends.back();
+        TouchObject *first = g_sling_ends.front();
+        TouchObject *last = g_sling_ends.back();
         bandCoords[0] = first->loc.x;
         bandCoords[1] = first->loc.y;
         bandCoords[2] = last->loc.x;
@@ -495,8 +509,8 @@ void renderRubberBand(){
     }
     else if (g_fingerProjectile != NULL && g_sling_ends.size() == 2){
         GLfloat bandCoords[6];
-        SlingEnd *first = g_sling_ends.front();
-        SlingEnd *last = g_sling_ends.back();
+        TouchObject *first = g_sling_ends.front();
+        TouchObject *last = g_sling_ends.back();
 
         
         bandCoords[0] = first->loc.x;
@@ -546,11 +560,35 @@ void renderWaveform()
 
 }
 
+void checkOtherProjectilesForCollisions(){
+    
+
+    //NSLog(@"x: %f, y: %f", g_projectiles[i]->loc.x, g_projectiles[i]->loc.y);
+
+    for (int first = 0; first < g_projectiles.size(); first++){
+        for (int second = first+1; second < g_projectiles.size(); second++){
+            ProjectileObject *firstProjectile = g_projectiles[first];
+            ProjectileObject *secondProjectile = g_projectiles[second];
+            GLfloat diameter = 0.5*firstProjectile->sca.x + 0.5*secondProjectile->sca.x;
+            if ((firstProjectile->loc - secondProjectile->loc).magnitude() < diameter){
+                //NSLog(@"a collision occured!");
+                Vector3D tmp;
+                tmp = firstProjectile->m_vel;
+                firstProjectile->m_vel = secondProjectile->m_vel;
+                secondProjectile->m_vel = tmp;
+                
+            }
+        }
+    }
+    
+    
+}
+
 void renderEntities()
 {
 
     vector<Entity *>::iterator e;
-    vector<SlingEnd *>::iterator s;
+    vector<TouchObject *>::iterator s;
     
     if (g_fingerProjectile != NULL && !g_fingerProjectile->active){
         
@@ -575,15 +613,23 @@ void renderEntities()
             g_mandolin->pluck(1.0, pluckPos);
             //and create moving projectile
             
-            Entity *launched_projectile = new MovingProjectile();
+            Vector3D midpoint = (g_sling_ends.front()->loc + g_sling_ends.back()->loc);
+            midpoint *= 0.5;
+            Vector3D diff = midpoint - g_fingerProjectile->loc;
+            Vector3D initial_velocity = diff * 2;
+            
+            Vector3D min_walls(-g_ratio, -1, 0);
+            Vector3D max_walls(g_ratio, 1, 0);
+            ProjectileObject *launched_projectile = new ProjectileObject(g_texture[1], initial_velocity, min_walls, max_walls );
             g_entities.push_back(launched_projectile);
+            g_projectiles.push_back(launched_projectile);
             launched_projectile->active = true;
             // reset transparency
             launched_projectile->alpha = 1.0;
             // set color
             launched_projectile->col.set( 1, 0, 0 );
             // set scale
-            launched_projectile->sca.setAll( .65 );
+            launched_projectile->sca.setAll( .5 );
             launched_projectile->loc = g_fingerProjectile->loc;
             
             
@@ -601,7 +647,7 @@ void renderEntities()
         }
     }
     if (g_fingerProjectile != NULL && g_sling_ends.size() < 2){
-        vector<SlingEnd *>::iterator i;
+        vector<TouchObject *>::iterator i;
         for (i = g_sling_ends.begin(); i != g_sling_ends.end(); i++){
             (*i)->active = FALSE;
         }
@@ -618,6 +664,8 @@ void renderEntities()
             e = g_entities.erase( e );
         }
         else{
+            //check for other projectiles for collisions
+            checkOtherProjectilesForCollisions();
             (*e)->update( MoGfx::delta() );
             
             // push

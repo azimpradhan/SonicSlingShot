@@ -29,6 +29,8 @@
 		05201F40189856EC00DB6B0F /* mand12.raw in Resources */ = {isa = PBXBuildFile; fileRef = 05201F34189856EC00DB6B0F /* mand12.raw */; };
 		05201F441898576800DB6B0F /* OneZero.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05201F431898576800DB6B0F /* OneZero.cpp */; };
 		05201F4618987E9900DB6B0F /* stanford.png in Resources */ = {isa = PBXBuildFile; fileRef = 05201F4518987E9900DB6B0F /* stanford.png */; };
+		05201F491899104600DB6B0F /* Projectile.png in Resources */ = {isa = PBXBuildFile; fileRef = 05201F471899104600DB6B0F /* Projectile.png */; };
+		05201F4A1899104600DB6B0F /* SlingEnd.png in Resources */ = {isa = PBXBuildFile; fileRef = 05201F481899104600DB6B0F /* SlingEnd.png */; };
 		0593FEA81895B58A00C29C86 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0593FEA71895B58A00C29C86 /* SettingsViewController.m */; };
 		8642C2D01891F82000E4D7FE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8642C2CF1891F82000E4D7FE /* Foundation.framework */; };
 		8642C2D21891F82000E4D7FE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8642C2D11891F82000E4D7FE /* CoreGraphics.framework */; };
@@ -106,6 +108,8 @@
 		05201F421898573E00DB6B0F /* OneZero.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OneZero.h; path = "MoMu-STK-1.0.0/include/OneZero.h"; sourceTree = "<group>"; };
 		05201F431898576800DB6B0F /* OneZero.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OneZero.cpp; path = "MoMu-STK-1.0.0/src/OneZero.cpp"; sourceTree = "<group>"; };
 		05201F4518987E9900DB6B0F /* stanford.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stanford.png; sourceTree = "<group>"; };
+		05201F471899104600DB6B0F /* Projectile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Projectile.png; sourceTree = "<group>"; };
+		05201F481899104600DB6B0F /* SlingEnd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SlingEnd.png; sourceTree = "<group>"; };
 		0593FEA61895B58A00C29C86 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsViewController.h; path = GLamorHD2/data/SettingsViewController.h; sourceTree = "<group>"; };
 		0593FEA71895B58A00C29C86 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsViewController.m; path = GLamorHD2/data/SettingsViewController.m; sourceTree = "<group>"; };
 		8642C2CC1891F82000E4D7FE /* SonicSlingShot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SonicSlingShot.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -383,6 +387,8 @@
 		8642C35E1891FAC200E4D7FE /* textures */ = {
 			isa = PBXGroup;
 			children = (
+				05201F471899104600DB6B0F /* Projectile.png */,
+				05201F481899104600DB6B0F /* SlingEnd.png */,
 				05201F4518987E9900DB6B0F /* stanford.png */,
 				8642C35F1891FAC200E4D7FE /* texture.png */,
 			);
@@ -469,9 +475,11 @@
 				05201F3D189856EC00DB6B0F /* mand9.raw in Resources */,
 				05201F3C189856EC00DB6B0F /* mand8.raw in Resources */,
 				05201F3B189856EC00DB6B0F /* mand7.raw in Resources */,
+				05201F4A1899104600DB6B0F /* SlingEnd.png in Resources */,
 				05201F38189856EC00DB6B0F /* mand4.raw in Resources */,
 				05201F40189856EC00DB6B0F /* mand12.raw in Resources */,
 				05201F3F189856EC00DB6B0F /* mand11.raw in Resources */,
+				05201F491899104600DB6B0F /* Projectile.png in Resources */,
 				05201F36189856EC00DB6B0F /* mand2.raw in Resources */,
 				05201F39189856EC00DB6B0F /* mand5.raw in Resources */,
 				05201F3E189856EC00DB6B0F /* mand10.raw in Resources */,
