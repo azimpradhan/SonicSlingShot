@@ -10,7 +10,7 @@
 #import "mo_audio.h"
 #import "mo_gfx.h"
 #import "mo_touch.h"
-//#import "Mandolin.h"
+#import "Mandolin.h"
 #import <vector>
 using namespace std;
 
@@ -24,7 +24,8 @@ using namespace std;
 GLfloat g_waveformWidth = 2;
 GLfloat g_gfxWidth = 1024;
 GLfloat g_gfxHeight = 640;
-//stk::Mandolin *g_mandolin;
+GLfloat g_ratio = g_gfxWidth/g_gfxHeight;
+stk::Mandolin *g_mandolin;
 
 
 // buffer
@@ -32,7 +33,7 @@ SAMPLE g_vertices[FRAMESIZE*2];
 UInt32 g_numFrames;
 
 // texture
-GLuint g_texture[1];
+GLuint g_texture[2];
 
 
 
@@ -82,18 +83,7 @@ public:
     GLboolean active;
 
 };
-class RubberBand : public Entity
-{
-    virtual void update (double dt){
-        
-    }
-    virtual void render (){
-        
-    }
-public:
-    int numPoints;
-    GLfloat lineCoords[6];
-};
+
 
 class SlingEnd : public Entity
 {
@@ -116,18 +106,6 @@ class SlingEnd : public Entity
             this->loc.set( x, y, 0 );
             
         }
-//        // update!
-//        GLfloat inc = .5 * dt;
-//        sca.x += inc;
-//        sca.y += inc;
-//        sca.z += inc;
-//        alpha -= 2*dt;
-//        
-//        // check for termination condition
-//        if( alpha < .01 )
-//        {
-//            active = false;
-//        }
     }
     
     // redner
@@ -164,13 +142,68 @@ public:
     UIView *view;
 };
 
-// Entity * g_entities[NUM_ENTITIES];
+
+//projectile
+
+class Projectile : public SlingEnd{
+    // no update
+    virtual void render()
+    {
+        // enable texture mapping
+        glEnable( GL_TEXTURE_2D );
+        // enable blending
+        glEnable( GL_BLEND );
+        // set blend func
+        glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+        // glBlendFunc( GL_ONE, GL_ONE );
+        
+        // bind the texture
+        glBindTexture( GL_TEXTURE_2D, g_texture[1] );
+        
+        // vertex
+        glVertexPointer( 2, GL_FLOAT, 0, squareVertices );
+        glEnableClientState(GL_VERTEX_ARRAY );
+        
+        // texture coordinate
+        glTexCoordPointer( 2, GL_FLOAT, 0, texCoords );
+        glEnableClientState( GL_TEXTURE_COORD_ARRAY );
+        
+        // triangle strip
+        glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+        
+        // disable blend
+        glDisable( GL_BLEND );
+        glDisable( GL_TEXTURE_2D );
+    }
+
+    
+public:
+
+    
+};
+
+class MovingProjectile : public Projectile{
+   
+    
+    
+    virtual void update( double dt )
+    {
+        this->loc.x = this->loc.x + 0.01;
+        
+        
+    }
+    
+    
+public:
+};
+
+
+
 
 std::vector<Entity *> g_entities;
 std::vector<SlingEnd *> g_sling_ends;
 Entity *g_fingerProjectile = NULL;
 
-RubberBand *g_rubber_band = new RubberBand();
 
 // function prototypes
 void renderWaveform();
@@ -205,8 +238,8 @@ void audio_callback( Float32 * buffer, UInt32 numFrames, void * userData )
         // set the y coordinate (with scaling)
         g_vertices[2*i+1] = buffer[2*i] * 2;
         // zero
-        buffer[2*i] = buffer[2*i+1] = 0;
-        //buffer[2*i] = buffer[2*i+1] =  g_mandolin->tick();
+        //buffer[2*i] = buffer[2*i+1] = 0;
+        buffer[2*i] = buffer[2*i+1] =  g_mandolin->tick();
 
 
     }
@@ -254,7 +287,8 @@ void touch_callback( NSSet * touches, UIView * view,
 
                 // find a free one
                 if (g_sling_ends.size() == 2 && g_fingerProjectile == NULL){
-                    Entity * e = new SlingEnd();
+                    //create a projectile instead
+                    Entity * e = new Projectile();
                     g_fingerProjectile = e;
                     // check
                     if( e != NULL )
@@ -269,8 +303,8 @@ void touch_callback( NSSet * touches, UIView * view,
                         e->col.set( 1, 0, 0 );
                         // set scale
                         e->sca.setAll( .65 );
-                        ((SlingEnd *)e)->touchEvent = touch;
-                        ((SlingEnd *)e)->view = view;
+                        ((Projectile *)e)->touchEvent = touch;
+                        ((Projectile *)e)->view = view;
                     }
                     
                     
@@ -346,6 +380,16 @@ void GLamorInit()
     // load the texture
     MoGfx::loadTexture( @"texture", @"png" );
     
+    
+    // bind the texture
+    glBindTexture( GL_TEXTURE_2D, g_texture[1] );
+    // setting parameters
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+    // load the texture
+    MoGfx::loadTexture( @"stanford", @"png" );
+    
+    
     static bool initialized = NO;
     if (!initialized){
         initialized = YES;
@@ -353,7 +397,8 @@ void GLamorInit()
         // set touch callback
         MoTouch::addCallback( touch_callback, NULL );
         
-        //g_mandolin = new stk::Mandolin(440.0);
+        g_mandolin = new stk::Mandolin(440.0);
+        //g_mandolin->noteOff(0.0);
         //g_mandolin->setFrequency(440.0);
         
         // init
@@ -510,8 +555,39 @@ void renderEntities()
     if (g_fingerProjectile != NULL && !g_fingerProjectile->active){
         
         
-        if (g_sling_ends.size() == 2) NSLog(@"Pluck!");
-        //if (g_sling_ends.size() == 2) g_mandolin->pluck(1.0, 0.5);
+        if (g_sling_ends.size() == 2){
+            NSLog(@"Pluck!");
+            g_mandolin->setFrequency(440.0);
+            
+            float distance_between_ends = (g_sling_ends.front()->loc - g_sling_ends.back()->loc).magnitude();
+            float lengthLeftPluck = (g_sling_ends.front()->loc - g_fingerProjectile->loc).magnitude();
+            float lengthRightPluck = (g_sling_ends.back()->loc - g_fingerProjectile->loc).magnitude();
+            float pluckPos = lengthLeftPluck / (lengthLeftPluck + lengthRightPluck);
+            
+            float diagonal = sqrt(g_ratio*g_ratio*4 + 1*1*4);
+            float freq = 200.0/(0.5*(distance_between_ends/(diagonal)));
+            
+            g_mandolin->setPluckPosition(pluckPos);
+            g_mandolin->setFrequency(freq);
+            NSLog(@"diagonal: %f", diagonal);
+            NSLog(@"length: %f", distance_between_ends);
+            NSLog(@"freq: %f", freq);
+            g_mandolin->pluck(1.0, pluckPos);
+            //and create moving projectile
+            
+            Entity *launched_projectile = new MovingProjectile();
+            g_entities.push_back(launched_projectile);
+            launched_projectile->active = true;
+            // reset transparency
+            launched_projectile->alpha = 1.0;
+            // set color
+            launched_projectile->col.set( 1, 0, 0 );
+            // set scale
+            launched_projectile->sca.setAll( .65 );
+            launched_projectile->loc = g_fingerProjectile->loc;
+            
+            
+        }
         g_fingerProjectile = NULL;
         
     }

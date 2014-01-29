@@ -7,8 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		05201F201898569B00DB6B0F /* DelayA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05201F181898569B00DB6B0F /* DelayA.cpp */; };
+		05201F211898569B00DB6B0F /* DelayL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05201F191898569B00DB6B0F /* DelayL.cpp */; };
+		05201F221898569B00DB6B0F /* FileRead.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05201F1A1898569B00DB6B0F /* FileRead.cpp */; };
+		05201F231898569B00DB6B0F /* FileWvIn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05201F1B1898569B00DB6B0F /* FileWvIn.cpp */; };
+		05201F241898569B00DB6B0F /* Fir.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05201F1C1898569B00DB6B0F /* Fir.cpp */; };
+		05201F251898569B00DB6B0F /* Mandolin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05201F1D1898569B00DB6B0F /* Mandolin.cpp */; };
+		05201F261898569B00DB6B0F /* PluckTwo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05201F1E1898569B00DB6B0F /* PluckTwo.cpp */; };
+		05201F271898569B00DB6B0F /* Stk.mm in Sources */ = {isa = PBXBuildFile; fileRef = 05201F1F1898569B00DB6B0F /* Stk.mm */; };
+		05201F35189856EC00DB6B0F /* mand1.raw in Resources */ = {isa = PBXBuildFile; fileRef = 05201F29189856EC00DB6B0F /* mand1.raw */; };
+		05201F36189856EC00DB6B0F /* mand2.raw in Resources */ = {isa = PBXBuildFile; fileRef = 05201F2A189856EC00DB6B0F /* mand2.raw */; };
+		05201F37189856EC00DB6B0F /* mand3.raw in Resources */ = {isa = PBXBuildFile; fileRef = 05201F2B189856EC00DB6B0F /* mand3.raw */; };
+		05201F38189856EC00DB6B0F /* mand4.raw in Resources */ = {isa = PBXBuildFile; fileRef = 05201F2C189856EC00DB6B0F /* mand4.raw */; };
+		05201F39189856EC00DB6B0F /* mand5.raw in Resources */ = {isa = PBXBuildFile; fileRef = 05201F2D189856EC00DB6B0F /* mand5.raw */; };
+		05201F3A189856EC00DB6B0F /* mand6.raw in Resources */ = {isa = PBXBuildFile; fileRef = 05201F2E189856EC00DB6B0F /* mand6.raw */; };
+		05201F3B189856EC00DB6B0F /* mand7.raw in Resources */ = {isa = PBXBuildFile; fileRef = 05201F2F189856EC00DB6B0F /* mand7.raw */; };
+		05201F3C189856EC00DB6B0F /* mand8.raw in Resources */ = {isa = PBXBuildFile; fileRef = 05201F30189856EC00DB6B0F /* mand8.raw */; };
+		05201F3D189856EC00DB6B0F /* mand9.raw in Resources */ = {isa = PBXBuildFile; fileRef = 05201F31189856EC00DB6B0F /* mand9.raw */; };
+		05201F3E189856EC00DB6B0F /* mand10.raw in Resources */ = {isa = PBXBuildFile; fileRef = 05201F32189856EC00DB6B0F /* mand10.raw */; };
+		05201F3F189856EC00DB6B0F /* mand11.raw in Resources */ = {isa = PBXBuildFile; fileRef = 05201F33189856EC00DB6B0F /* mand11.raw */; };
+		05201F40189856EC00DB6B0F /* mand12.raw in Resources */ = {isa = PBXBuildFile; fileRef = 05201F34189856EC00DB6B0F /* mand12.raw */; };
+		05201F441898576800DB6B0F /* OneZero.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05201F431898576800DB6B0F /* OneZero.cpp */; };
+		05201F4618987E9900DB6B0F /* stanford.png in Resources */ = {isa = PBXBuildFile; fileRef = 05201F4518987E9900DB6B0F /* stanford.png */; };
 		0593FEA81895B58A00C29C86 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0593FEA71895B58A00C29C86 /* SettingsViewController.m */; };
-		0593FEE71896297100C29C86 /* rocking8m11e.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 0593FEE61896297100C29C86 /* rocking8m11e.sf2 */; };
 		8642C2D01891F82000E4D7FE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8642C2CF1891F82000E4D7FE /* Foundation.framework */; };
 		8642C2D21891F82000E4D7FE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8642C2D11891F82000E4D7FE /* CoreGraphics.framework */; };
 		8642C2D41891F82000E4D7FE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8642C2D31891F82000E4D7FE /* UIKit.framework */; };
@@ -50,9 +71,43 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		05201F0A189855D700DB6B0F /* DelayA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DelayA.h; path = "MoMu-STK-1.0.0/include/DelayA.h"; sourceTree = "<group>"; };
+		05201F0B189855D700DB6B0F /* DelayL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DelayL.h; path = "MoMu-STK-1.0.0/include/DelayL.h"; sourceTree = "<group>"; };
+		05201F0C189855D700DB6B0F /* FileRead.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileRead.h; path = "MoMu-STK-1.0.0/include/FileRead.h"; sourceTree = "<group>"; };
+		05201F0D189855D700DB6B0F /* FileWvIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileWvIn.h; path = "MoMu-STK-1.0.0/include/FileWvIn.h"; sourceTree = "<group>"; };
+		05201F0E189855D700DB6B0F /* Filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Filter.h; path = "MoMu-STK-1.0.0/include/Filter.h"; sourceTree = "<group>"; };
+		05201F0F189855D700DB6B0F /* Fir.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Fir.h; path = "MoMu-STK-1.0.0/include/Fir.h"; sourceTree = "<group>"; };
+		05201F10189855D700DB6B0F /* Instrmnt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Instrmnt.h; path = "MoMu-STK-1.0.0/include/Instrmnt.h"; sourceTree = "<group>"; };
+		05201F11189855D700DB6B0F /* Mandolin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mandolin.h; path = "MoMu-STK-1.0.0/include/Mandolin.h"; sourceTree = "<group>"; };
+		05201F12189855D700DB6B0F /* Stk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Stk.h; path = "MoMu-STK-1.0.0/include/Stk.h"; sourceTree = "<group>"; };
+		05201F13189855D700DB6B0F /* WvIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WvIn.h; path = "MoMu-STK-1.0.0/include/WvIn.h"; sourceTree = "<group>"; };
+		05201F171898563800DB6B0F /* PluckTwo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PluckTwo.h; path = "MoMu-STK-1.0.0/include/PluckTwo.h"; sourceTree = "<group>"; };
+		05201F181898569B00DB6B0F /* DelayA.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DelayA.cpp; path = "MoMu-STK-1.0.0/src/DelayA.cpp"; sourceTree = "<group>"; };
+		05201F191898569B00DB6B0F /* DelayL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DelayL.cpp; path = "MoMu-STK-1.0.0/src/DelayL.cpp"; sourceTree = "<group>"; };
+		05201F1A1898569B00DB6B0F /* FileRead.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FileRead.cpp; path = "MoMu-STK-1.0.0/src/FileRead.cpp"; sourceTree = "<group>"; };
+		05201F1B1898569B00DB6B0F /* FileWvIn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FileWvIn.cpp; path = "MoMu-STK-1.0.0/src/FileWvIn.cpp"; sourceTree = "<group>"; };
+		05201F1C1898569B00DB6B0F /* Fir.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Fir.cpp; path = "MoMu-STK-1.0.0/src/Fir.cpp"; sourceTree = "<group>"; };
+		05201F1D1898569B00DB6B0F /* Mandolin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Mandolin.cpp; path = "MoMu-STK-1.0.0/src/Mandolin.cpp"; sourceTree = "<group>"; };
+		05201F1E1898569B00DB6B0F /* PluckTwo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PluckTwo.cpp; path = "MoMu-STK-1.0.0/src/PluckTwo.cpp"; sourceTree = "<group>"; };
+		05201F1F1898569B00DB6B0F /* Stk.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Stk.mm; path = "MoMu-STK-1.0.0/src/Stk.mm"; sourceTree = "<group>"; };
+		05201F29189856EC00DB6B0F /* mand1.raw */ = {isa = PBXFileReference; lastKnownFileType = file; name = mand1.raw; path = "MoMu-STK-1.0.0/rawwaves/mand1.raw"; sourceTree = "<group>"; };
+		05201F2A189856EC00DB6B0F /* mand2.raw */ = {isa = PBXFileReference; lastKnownFileType = file; name = mand2.raw; path = "MoMu-STK-1.0.0/rawwaves/mand2.raw"; sourceTree = "<group>"; };
+		05201F2B189856EC00DB6B0F /* mand3.raw */ = {isa = PBXFileReference; lastKnownFileType = file; name = mand3.raw; path = "MoMu-STK-1.0.0/rawwaves/mand3.raw"; sourceTree = "<group>"; };
+		05201F2C189856EC00DB6B0F /* mand4.raw */ = {isa = PBXFileReference; lastKnownFileType = file; name = mand4.raw; path = "MoMu-STK-1.0.0/rawwaves/mand4.raw"; sourceTree = "<group>"; };
+		05201F2D189856EC00DB6B0F /* mand5.raw */ = {isa = PBXFileReference; lastKnownFileType = file; name = mand5.raw; path = "MoMu-STK-1.0.0/rawwaves/mand5.raw"; sourceTree = "<group>"; };
+		05201F2E189856EC00DB6B0F /* mand6.raw */ = {isa = PBXFileReference; lastKnownFileType = file; name = mand6.raw; path = "MoMu-STK-1.0.0/rawwaves/mand6.raw"; sourceTree = "<group>"; };
+		05201F2F189856EC00DB6B0F /* mand7.raw */ = {isa = PBXFileReference; lastKnownFileType = file; name = mand7.raw; path = "MoMu-STK-1.0.0/rawwaves/mand7.raw"; sourceTree = "<group>"; };
+		05201F30189856EC00DB6B0F /* mand8.raw */ = {isa = PBXFileReference; lastKnownFileType = file; name = mand8.raw; path = "MoMu-STK-1.0.0/rawwaves/mand8.raw"; sourceTree = "<group>"; };
+		05201F31189856EC00DB6B0F /* mand9.raw */ = {isa = PBXFileReference; lastKnownFileType = file; name = mand9.raw; path = "MoMu-STK-1.0.0/rawwaves/mand9.raw"; sourceTree = "<group>"; };
+		05201F32189856EC00DB6B0F /* mand10.raw */ = {isa = PBXFileReference; lastKnownFileType = file; name = mand10.raw; path = "MoMu-STK-1.0.0/rawwaves/mand10.raw"; sourceTree = "<group>"; };
+		05201F33189856EC00DB6B0F /* mand11.raw */ = {isa = PBXFileReference; lastKnownFileType = file; name = mand11.raw; path = "MoMu-STK-1.0.0/rawwaves/mand11.raw"; sourceTree = "<group>"; };
+		05201F34189856EC00DB6B0F /* mand12.raw */ = {isa = PBXFileReference; lastKnownFileType = file; name = mand12.raw; path = "MoMu-STK-1.0.0/rawwaves/mand12.raw"; sourceTree = "<group>"; };
+		05201F411898570200DB6B0F /* Skini_msg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Skini_msg.h; path = "MoMu-STK-1.0.0/include/Skini_msg.h"; sourceTree = "<group>"; };
+		05201F421898573E00DB6B0F /* OneZero.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OneZero.h; path = "MoMu-STK-1.0.0/include/OneZero.h"; sourceTree = "<group>"; };
+		05201F431898576800DB6B0F /* OneZero.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OneZero.cpp; path = "MoMu-STK-1.0.0/src/OneZero.cpp"; sourceTree = "<group>"; };
+		05201F4518987E9900DB6B0F /* stanford.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stanford.png; sourceTree = "<group>"; };
 		0593FEA61895B58A00C29C86 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsViewController.h; path = GLamorHD2/data/SettingsViewController.h; sourceTree = "<group>"; };
 		0593FEA71895B58A00C29C86 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsViewController.m; path = GLamorHD2/data/SettingsViewController.m; sourceTree = "<group>"; };
-		0593FEE61896297100C29C86 /* rocking8m11e.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = rocking8m11e.sf2; sourceTree = "<group>"; };
 		8642C2CC1891F82000E4D7FE /* SonicSlingShot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SonicSlingShot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8642C2CF1891F82000E4D7FE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8642C2D11891F82000E4D7FE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -125,12 +180,69 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0593FEE51896297100C29C86 /* sfonts */ = {
+		05201F14189855EE00DB6B0F /* stk */ = {
 			isa = PBXGroup;
 			children = (
-				0593FEE61896297100C29C86 /* rocking8m11e.sf2 */,
+				05201F28189856AA00DB6B0F /* rawwaves */,
+				05201F161898561100DB6B0F /* src */,
+				05201F151898560100DB6B0F /* include */,
 			);
-			path = sfonts;
+			name = stk;
+			sourceTree = "<group>";
+		};
+		05201F151898560100DB6B0F /* include */ = {
+			isa = PBXGroup;
+			children = (
+				05201F421898573E00DB6B0F /* OneZero.h */,
+				05201F411898570200DB6B0F /* Skini_msg.h */,
+				05201F171898563800DB6B0F /* PluckTwo.h */,
+				05201F0A189855D700DB6B0F /* DelayA.h */,
+				05201F0B189855D700DB6B0F /* DelayL.h */,
+				05201F0C189855D700DB6B0F /* FileRead.h */,
+				05201F0D189855D700DB6B0F /* FileWvIn.h */,
+				05201F0E189855D700DB6B0F /* Filter.h */,
+				05201F0F189855D700DB6B0F /* Fir.h */,
+				05201F10189855D700DB6B0F /* Instrmnt.h */,
+				05201F11189855D700DB6B0F /* Mandolin.h */,
+				05201F12189855D700DB6B0F /* Stk.h */,
+				05201F13189855D700DB6B0F /* WvIn.h */,
+			);
+			name = include;
+			sourceTree = "<group>";
+		};
+		05201F161898561100DB6B0F /* src */ = {
+			isa = PBXGroup;
+			children = (
+				05201F431898576800DB6B0F /* OneZero.cpp */,
+				05201F181898569B00DB6B0F /* DelayA.cpp */,
+				05201F191898569B00DB6B0F /* DelayL.cpp */,
+				05201F1A1898569B00DB6B0F /* FileRead.cpp */,
+				05201F1B1898569B00DB6B0F /* FileWvIn.cpp */,
+				05201F1C1898569B00DB6B0F /* Fir.cpp */,
+				05201F1D1898569B00DB6B0F /* Mandolin.cpp */,
+				05201F1E1898569B00DB6B0F /* PluckTwo.cpp */,
+				05201F1F1898569B00DB6B0F /* Stk.mm */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+		05201F28189856AA00DB6B0F /* rawwaves */ = {
+			isa = PBXGroup;
+			children = (
+				05201F29189856EC00DB6B0F /* mand1.raw */,
+				05201F2A189856EC00DB6B0F /* mand2.raw */,
+				05201F2B189856EC00DB6B0F /* mand3.raw */,
+				05201F2C189856EC00DB6B0F /* mand4.raw */,
+				05201F2D189856EC00DB6B0F /* mand5.raw */,
+				05201F2E189856EC00DB6B0F /* mand6.raw */,
+				05201F2F189856EC00DB6B0F /* mand7.raw */,
+				05201F30189856EC00DB6B0F /* mand8.raw */,
+				05201F31189856EC00DB6B0F /* mand9.raw */,
+				05201F32189856EC00DB6B0F /* mand10.raw */,
+				05201F33189856EC00DB6B0F /* mand11.raw */,
+				05201F34189856EC00DB6B0F /* mand12.raw */,
+			);
+			name = rawwaves;
 			sourceTree = "<group>";
 		};
 		8642C2C31891F82000E4D7FE = {
@@ -218,6 +330,7 @@
 		8642C30F1891F86500E4D7FE /* api */ = {
 			isa = PBXGroup;
 			children = (
+				05201F14189855EE00DB6B0F /* stk */,
 				8642C3101891F86500E4D7FE /* momu */,
 			);
 			name = api;
@@ -261,7 +374,6 @@
 		8642C35D1891FAC200E4D7FE /* data */ = {
 			isa = PBXGroup;
 			children = (
-				0593FEE51896297100C29C86 /* sfonts */,
 				8642C35E1891FAC200E4D7FE /* textures */,
 			);
 			name = data;
@@ -271,6 +383,7 @@
 		8642C35E1891FAC200E4D7FE /* textures */ = {
 			isa = PBXGroup;
 			children = (
+				05201F4518987E9900DB6B0F /* stanford.png */,
 				8642C35F1891FAC200E4D7FE /* texture.png */,
 			);
 			path = textures;
@@ -353,9 +466,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0593FEE71896297100C29C86 /* rocking8m11e.sf2 in Resources */,
+				05201F3D189856EC00DB6B0F /* mand9.raw in Resources */,
+				05201F3C189856EC00DB6B0F /* mand8.raw in Resources */,
+				05201F3B189856EC00DB6B0F /* mand7.raw in Resources */,
+				05201F38189856EC00DB6B0F /* mand4.raw in Resources */,
+				05201F40189856EC00DB6B0F /* mand12.raw in Resources */,
+				05201F3F189856EC00DB6B0F /* mand11.raw in Resources */,
+				05201F36189856EC00DB6B0F /* mand2.raw in Resources */,
+				05201F39189856EC00DB6B0F /* mand5.raw in Resources */,
+				05201F3E189856EC00DB6B0F /* mand10.raw in Resources */,
+				05201F35189856EC00DB6B0F /* mand1.raw in Resources */,
+				05201F4618987E9900DB6B0F /* stanford.png in Resources */,
 				8642C3601891FAC200E4D7FE /* texture.png in Resources */,
 				8642C2EA1891F82000E4D7FE /* Main_iPad.storyboard in Resources */,
+				05201F37189856EC00DB6B0F /* mand3.raw in Resources */,
+				05201F3A189856EC00DB6B0F /* mand6.raw in Resources */,
 				8642C2E71891F82000E4D7FE /* Main_iPhone.storyboard in Resources */,
 				8642C2F31891F82000E4D7FE /* Images.xcassets in Resources */,
 				8642C2DE1891F82000E4D7FE /* InfoPlist.strings in Resources */,
@@ -378,17 +503,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				8642C3461891F86500E4D7FE /* mo_fft.mm in Sources */,
+				05201F231898569B00DB6B0F /* FileWvIn.cpp in Sources */,
 				8642C3441891F86500E4D7FE /* mo_audio.mm in Sources */,
 				8642C3581891F86500E4D7FE /* renderer.mm in Sources */,
+				05201F271898569B00DB6B0F /* Stk.mm in Sources */,
 				8642C2E01891F82000E4D7FE /* main.m in Sources */,
 				8642C34B1891F86500E4D7FE /* mo_touch.mm in Sources */,
 				8642C3471891F86500E4D7FE /* mo_fun.cpp in Sources */,
+				05201F211898569B00DB6B0F /* DelayL.cpp in Sources */,
 				8642C3591891F86500E4D7FE /* GLamorAppDelegate.mm in Sources */,
+				05201F241898569B00DB6B0F /* Fir.cpp in Sources */,
+				05201F201898569B00DB6B0F /* DelayA.cpp in Sources */,
+				05201F251898569B00DB6B0F /* Mandolin.cpp in Sources */,
+				05201F221898569B00DB6B0F /* FileRead.cpp in Sources */,
 				8642C3451891F86500E4D7FE /* mo_buffer.mm in Sources */,
 				8642C3481891F86500E4D7FE /* mo_gfx.mm in Sources */,
 				8642C35A1891F86500E4D7FE /* GLamorViewController.mm in Sources */,
 				8642C3491891F86500E4D7FE /* mo_glut.cpp in Sources */,
+				05201F441898576800DB6B0F /* OneZero.cpp in Sources */,
 				8642C34A1891F86500E4D7FE /* mo_thread.mm in Sources */,
+				05201F261898569B00DB6B0F /* PluckTwo.cpp in Sources */,
 				0593FEA81895B58A00C29C86 /* SettingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -532,6 +666,9 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/Azim/Music256b/Assignment2/SonicSlingShot/GLamorHD2/fsynth/lib,
+					/Users/Azim/Music256b/Assignment2/SonicSlingShot/GLamorHD2/api/fsynth/iOS4/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/lib,
+					/Users/Azim/Music256b/Assignment2/SonicSlingShot/GLamorHD2/api/fsynth/iOS6/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/lib,
+					/Users/Azim/Music256b/Assignment2/SonicSlingShot/GLamorHD2/api/fsynth/src/.libs,
 				);
 				PRODUCT_NAME = SonicSlingShot;
 				WRAPPER_EXTENSION = app;
@@ -549,6 +686,9 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/Azim/Music256b/Assignment2/SonicSlingShot/GLamorHD2/fsynth/lib,
+					/Users/Azim/Music256b/Assignment2/SonicSlingShot/GLamorHD2/api/fsynth/iOS4/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/lib,
+					/Users/Azim/Music256b/Assignment2/SonicSlingShot/GLamorHD2/api/fsynth/iOS6/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/lib,
+					/Users/Azim/Music256b/Assignment2/SonicSlingShot/GLamorHD2/api/fsynth/src/.libs,
 				);
 				PRODUCT_NAME = SonicSlingShot;
 				WRAPPER_EXTENSION = app;
