@@ -32,6 +32,7 @@
 		05201F491899104600DB6B0F /* Projectile.png in Resources */ = {isa = PBXBuildFile; fileRef = 05201F471899104600DB6B0F /* Projectile.png */; };
 		05201F4A1899104600DB6B0F /* SlingEnd.png in Resources */ = {isa = PBXBuildFile; fileRef = 05201F481899104600DB6B0F /* SlingEnd.png */; };
 		0593FEA81895B58A00C29C86 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0593FEA71895B58A00C29C86 /* SettingsViewController.m */; };
+		05DBAEB6189B26DC00E68B12 /* Shakers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05DBAEB5189B26DC00E68B12 /* Shakers.cpp */; };
 		8642C2D01891F82000E4D7FE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8642C2CF1891F82000E4D7FE /* Foundation.framework */; };
 		8642C2D21891F82000E4D7FE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8642C2D11891F82000E4D7FE /* CoreGraphics.framework */; };
 		8642C2D41891F82000E4D7FE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8642C2D31891F82000E4D7FE /* UIKit.framework */; };
@@ -112,6 +113,9 @@
 		05201F481899104600DB6B0F /* SlingEnd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SlingEnd.png; sourceTree = "<group>"; };
 		0593FEA61895B58A00C29C86 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsViewController.h; path = GLamorHD2/data/SettingsViewController.h; sourceTree = "<group>"; };
 		0593FEA71895B58A00C29C86 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsViewController.m; path = GLamorHD2/data/SettingsViewController.m; sourceTree = "<group>"; };
+		05DBAEB1189B228000E68B12 /* Generator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Generator.h; path = "MoMu-STK-1.0.0/include/Generator.h"; sourceTree = "<group>"; };
+		05DBAEB4189B26C200E68B12 /* Shakers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Shakers.h; path = "MoMu-STK-1.0.0/include/Shakers.h"; sourceTree = "<group>"; };
+		05DBAEB5189B26DC00E68B12 /* Shakers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Shakers.cpp; path = "MoMu-STK-1.0.0/src/Shakers.cpp"; sourceTree = "<group>"; };
 		8642C2CC1891F82000E4D7FE /* SonicSlingShot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SonicSlingShot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8642C2CF1891F82000E4D7FE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8642C2D11891F82000E4D7FE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -197,6 +201,8 @@
 		05201F151898560100DB6B0F /* include */ = {
 			isa = PBXGroup;
 			children = (
+				05DBAEB4189B26C200E68B12 /* Shakers.h */,
+				05DBAEB1189B228000E68B12 /* Generator.h */,
 				05201F421898573E00DB6B0F /* OneZero.h */,
 				05201F411898570200DB6B0F /* Skini_msg.h */,
 				05201F171898563800DB6B0F /* PluckTwo.h */,
@@ -217,6 +223,7 @@
 		05201F161898561100DB6B0F /* src */ = {
 			isa = PBXGroup;
 			children = (
+				05DBAEB5189B26DC00E68B12 /* Shakers.cpp */,
 				05201F431898576800DB6B0F /* OneZero.cpp */,
 				05201F181898569B00DB6B0F /* DelayA.cpp */,
 				05201F191898569B00DB6B0F /* DelayL.cpp */,
@@ -518,6 +525,7 @@
 				8642C2E01891F82000E4D7FE /* main.m in Sources */,
 				8642C34B1891F86500E4D7FE /* mo_touch.mm in Sources */,
 				8642C3471891F86500E4D7FE /* mo_fun.cpp in Sources */,
+				05DBAEB6189B26DC00E68B12 /* Shakers.cpp in Sources */,
 				05201F211898569B00DB6B0F /* DelayL.cpp in Sources */,
 				8642C3591891F86500E4D7FE /* GLamorAppDelegate.mm in Sources */,
 				05201F241898569B00DB6B0F /* Fir.cpp in Sources */,

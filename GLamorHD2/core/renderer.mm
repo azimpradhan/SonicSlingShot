@@ -11,6 +11,7 @@
 #import "mo_gfx.h"
 #import "mo_touch.h"
 #import "Mandolin.h"
+#import "Shakers.h"
 #import <vector>
 using namespace std;
 
@@ -22,11 +23,13 @@ using namespace std;
 
 // global variables
 GLfloat g_waveformWidth = 2;
-GLfloat g_gfxWidth = 1024;
+//GLfloat g_gfxWidth = 1024;
+GLfloat g_gfxWidth = 960;
 GLfloat g_gfxHeight = 640;
 GLfloat g_ratio = g_gfxWidth/g_gfxHeight;
 stk::Mandolin *g_mandolin;
-
+stk::Shakers *g_colliding_sound;
+stk::Shakers *g_wall_sound;
 
 // buffer
 SAMPLE g_vertices[FRAMESIZE*2];
@@ -158,6 +161,7 @@ public:
 };
 
 class ProjectileObject : public TextureObject{
+    
 
 public:
     ProjectileObject(GLuint texture, Vector3D velocity, Vector3D min, Vector3D max) : TextureObject(texture){
@@ -174,23 +178,31 @@ private:
         //NSLog(@"check x:%f, y: %f", this->loc.x, this->loc.y);
         GLfloat radius = this->sca.x/2;
         
-        if (this->loc.x - m_min.x < radius){
+        if (this->loc.x - m_min.x < radius && this->m_vel.x < 0.0){
             NSLog(@"bumped the left wall");
             this->m_vel.x = -this->m_vel.x;
-        }
-        if (this->loc.y - m_min.y < radius){
-            NSLog(@"bumped the bottom wall");
-            this->m_vel.y = -this->m_vel.y;
-            
-        }
-        if (m_max.x - this->loc.x < radius){
-            NSLog(@"bumped the right wall");
-            this->m_vel.x = -this->m_vel.x;
+            g_wall_sound->noteOn(8.0, 1.0);
 
         }
-        if (m_max.y - this->loc.y < radius){
+        if (this->loc.y - m_min.y < radius && this->m_vel.y < 0.0){
+            NSLog(@"bumped the bottom wall");
+            this->m_vel.y = -this->m_vel.y;
+            g_wall_sound->noteOn(8.0, 1.0);
+
+            
+        }
+        if (m_max.x - this->loc.x < radius && this->m_vel.x > 0.0){
+            NSLog(@"bumped the right wall");
+            this->m_vel.x = -this->m_vel.x;
+            g_wall_sound->noteOn(8.0, 1.0);
+
+
+        }
+        if (m_max.y - this->loc.y < radius && this->m_vel.y > 0.0){
             NSLog(@"bumped the top wall");
             this->m_vel.y = -this->m_vel.y;
+            g_wall_sound->noteOn(8.0, 1.0);
+
         }
         
         
@@ -255,7 +267,7 @@ void audio_callback( Float32 * buffer, UInt32 numFrames, void * userData )
         g_vertices[2*i+1] = buffer[2*i] * 2;
         // zero
         //buffer[2*i] = buffer[2*i+1] = 0;
-        buffer[2*i] = buffer[2*i+1] =  g_mandolin->tick();
+        buffer[2*i] = buffer[2*i+1] =  g_mandolin->tick() + g_colliding_sound->tick() * 0.5 + g_wall_sound->tick() ;
     }
     
     // save the num frames
@@ -412,6 +424,10 @@ void GLamorInit()
         MoTouch::addCallback( touch_callback, NULL );
         
         g_mandolin = new stk::Mandolin(440.0);
+        g_colliding_sound = new stk::Shakers();
+        g_colliding_sound->controlChange(20, 56.0);
+        g_wall_sound = new stk::Shakers();
+        g_wall_sound->controlChange(8, 56.0);
         //g_mandolin->noteOff(0.0);
         //g_mandolin->setFrequency(440.0);
         
@@ -576,7 +592,7 @@ void checkOtherProjectilesForCollisions(){
                 tmp = firstProjectile->m_vel;
                 firstProjectile->m_vel = secondProjectile->m_vel;
                 secondProjectile->m_vel = tmp;
-                
+                g_colliding_sound->noteOn(20.0, 1.0);
             }
         }
     }
