@@ -228,8 +228,9 @@ private:
     
     virtual void update( double dt )
     {
-        m_vel.x += ShotGlobals::x_pull * ShotGlobals::gravity*2.0;
-        m_vel.y += ShotGlobals::y_pull * ShotGlobals::gravity*2.0;
+        m_vel.x += ShotGlobals::x_pull * dt * ShotGlobals::gravity * 20.0;
+        m_vel.y += ShotGlobals::y_pull * dt * ShotGlobals::gravity * 20.0;
+
         m_vel *= (0.75 + 0.25*(1.0-ShotGlobals::damping));
         checkWalls();
         this->loc += m_vel*dt;
@@ -268,7 +269,7 @@ void accelCallback( double x, double y, double z, void * data )
     //NSLog(@"float y %f", y);
     
     //NSLog(@"float z %f", z);
-    if (z > 1.0 && g_projectiles.size() > 0){
+    if (z > 1.0 && g_projectiles.size() > 0 && ShotGlobals::enableClear){
         ShotGlobals::clearProjectile = true;
     }
 
@@ -645,7 +646,7 @@ void checkOtherProjectilesForCollisions(){
                 //reset locations to not clash
 
                 float total_overlap = diameter - (firstProjectile->loc - secondProjectile->loc).magnitude();
-                NSLog(@"total overlap is %f", total_overlap);
+                //NSLog(@"total overlap is %f", total_overlap);
                 float indiv_overlap = total_overlap/2.0;
                 if (indiv_overlap > 0){
                     adjustLocation(firstProjectile, indiv_overlap);
@@ -653,7 +654,7 @@ void checkOtherProjectilesForCollisions(){
                 }
 
                 float new_overlap = diameter - (firstProjectile->loc - secondProjectile->loc).magnitude();
-                NSLog(@"total newoverlap is %f", new_overlap);
+                //NSLog(@"total newoverlap is %f", new_overlap);
             
                 
 
@@ -686,7 +687,7 @@ void renderEntities()
         
         
         if (g_sling_ends.size() == 2){
-            NSLog(@"Pluck!");
+            //NSLog(@"Pluck!");
             g_mandolin->setFrequency(440.0);
             
             float distance_between_ends = (g_sling_ends.front()->loc - g_sling_ends.back()->loc).magnitude();

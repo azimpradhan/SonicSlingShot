@@ -8,8 +8,9 @@
 
 #include "ShotGlobals.h"
 
-float ShotGlobals::damping = 0.5;
-float ShotGlobals::gravity = 0.5;
+float ShotGlobals::damping = 0.133333;
+float ShotGlobals::gravity = 0.9999;
 float ShotGlobals::x_pull = 0.0;
 float ShotGlobals::y_pull = 0.0;
 bool ShotGlobals::clearProjectile = false;
+bool ShotGlobals::enableClear = true;

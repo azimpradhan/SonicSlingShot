@@ -17,6 +17,7 @@ public:
     static float x_pull;
     static float y_pull;
     static bool clearProjectile;
+    static bool enableClear;
 };
 
 #endif /* defined(__SonicSlingShot__ShotGlobals__) */

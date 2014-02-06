@@ -13,6 +13,7 @@
 @interface SettingsViewController ()
 @property (weak, nonatomic) IBOutlet UISlider *damping;
 @property (weak, nonatomic) IBOutlet UISlider *gravity;
+@property (weak, nonatomic) IBOutlet UISwitch *shakeOption;
 
 @end
 
@@ -32,6 +33,7 @@
     [super viewDidLoad];
     [self.gravity setValue:ShotGlobals::gravity];
     [self.damping setValue:ShotGlobals::damping];
+    [self.shakeOption setOn: ShotGlobals::enableClear];
 
 	// Do any additional setup after loading the view.
 }
@@ -46,6 +48,9 @@
 }
 - (IBAction)gravityChanged:(id)sender {
     ShotGlobals::gravity = self.gravity.value;
+}
+- (IBAction)shakeOptionChanged:(id)sender {
+    ShotGlobals::enableClear = self.shakeOption.isOn;
 }
 
 @end
