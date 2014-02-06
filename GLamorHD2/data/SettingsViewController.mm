@@ -7,8 +7,12 @@
 //
 
 #import "SettingsViewController.h"
+#import "renderer.h"
+#import "ShotGlobals.h"
 
 @interface SettingsViewController ()
+@property (weak, nonatomic) IBOutlet UISlider *damping;
+@property (weak, nonatomic) IBOutlet UISlider *gravity;
 
 @end
 
@@ -26,6 +30,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.gravity setValue:ShotGlobals::gravity];
+    [self.damping setValue:ShotGlobals::damping];
+
 	// Do any additional setup after loading the view.
 }
 
@@ -33,6 +40,12 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+- (IBAction)dampingChanged:(id)sender {
+    ShotGlobals::damping = self.damping.value;
+}
+- (IBAction)gravityChanged:(id)sender {
+    ShotGlobals::gravity = self.gravity.value;
 }
 
 @end

@@ -31,7 +31,9 @@
 		05201F4618987E9900DB6B0F /* stanford.png in Resources */ = {isa = PBXBuildFile; fileRef = 05201F4518987E9900DB6B0F /* stanford.png */; };
 		05201F491899104600DB6B0F /* Projectile.png in Resources */ = {isa = PBXBuildFile; fileRef = 05201F471899104600DB6B0F /* Projectile.png */; };
 		05201F4A1899104600DB6B0F /* SlingEnd.png in Resources */ = {isa = PBXBuildFile; fileRef = 05201F481899104600DB6B0F /* SlingEnd.png */; };
-		0593FEA81895B58A00C29C86 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0593FEA71895B58A00C29C86 /* SettingsViewController.m */; };
+		057038F118A3795200326A58 /* ShotGlobals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 057038EF18A3795200326A58 /* ShotGlobals.cpp */; };
+		057038F418A382ED00326A58 /* mo_accel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 057038F318A382ED00326A58 /* mo_accel.mm */; };
+		0593FEA81895B58A00C29C86 /* SettingsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0593FEA71895B58A00C29C86 /* SettingsViewController.mm */; };
 		05DBAEB6189B26DC00E68B12 /* Shakers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05DBAEB5189B26DC00E68B12 /* Shakers.cpp */; };
 		8642C2D01891F82000E4D7FE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8642C2CF1891F82000E4D7FE /* Foundation.framework */; };
 		8642C2D21891F82000E4D7FE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8642C2D11891F82000E4D7FE /* CoreGraphics.framework */; };
@@ -111,8 +113,12 @@
 		05201F4518987E9900DB6B0F /* stanford.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stanford.png; sourceTree = "<group>"; };
 		05201F471899104600DB6B0F /* Projectile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Projectile.png; sourceTree = "<group>"; };
 		05201F481899104600DB6B0F /* SlingEnd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SlingEnd.png; sourceTree = "<group>"; };
+		057038EF18A3795200326A58 /* ShotGlobals.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShotGlobals.cpp; sourceTree = "<group>"; };
+		057038F018A3795200326A58 /* ShotGlobals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShotGlobals.h; sourceTree = "<group>"; };
+		057038F218A382E500326A58 /* mo_accel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mo_accel.h; sourceTree = "<group>"; };
+		057038F318A382ED00326A58 /* mo_accel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = mo_accel.mm; sourceTree = "<group>"; };
 		0593FEA61895B58A00C29C86 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsViewController.h; path = GLamorHD2/data/SettingsViewController.h; sourceTree = "<group>"; };
-		0593FEA71895B58A00C29C86 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsViewController.m; path = GLamorHD2/data/SettingsViewController.m; sourceTree = "<group>"; };
+		0593FEA71895B58A00C29C86 /* SettingsViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = SettingsViewController.mm; path = GLamorHD2/data/SettingsViewController.mm; sourceTree = "<group>"; };
 		05DBAEB1189B228000E68B12 /* Generator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Generator.h; path = "MoMu-STK-1.0.0/include/Generator.h"; sourceTree = "<group>"; };
 		05DBAEB4189B26C200E68B12 /* Shakers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Shakers.h; path = "MoMu-STK-1.0.0/include/Shakers.h"; sourceTree = "<group>"; };
 		05DBAEB5189B26DC00E68B12 /* Shakers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Shakers.cpp; path = "MoMu-STK-1.0.0/src/Shakers.cpp"; sourceTree = "<group>"; };
@@ -263,7 +269,7 @@
 				8642C33D1891F86500E4D7FE /* core */,
 				8642C35D1891FAC200E4D7FE /* data */,
 				0593FEA61895B58A00C29C86 /* SettingsViewController.h */,
-				0593FEA71895B58A00C29C86 /* SettingsViewController.m */,
+				0593FEA71895B58A00C29C86 /* SettingsViewController.mm */,
 				8642C3401891F86500E4D7FE /* GLamorAppDelegate.h */,
 				8642C3411891F86500E4D7FE /* GLamorAppDelegate.mm */,
 				8642C3421891F86500E4D7FE /* GLamorViewController.h */,
@@ -351,6 +357,8 @@
 		8642C3101891F86500E4D7FE /* momu */ = {
 			isa = PBXGroup;
 			children = (
+				057038F318A382ED00326A58 /* mo_accel.mm */,
+				057038F218A382E500326A58 /* mo_accel.h */,
 				8642C3111891F86500E4D7FE /* mo_audio.h */,
 				8642C3121891F86500E4D7FE /* mo_audio.mm */,
 				8642C3131891F86500E4D7FE /* mo_buffer.h */,
@@ -377,6 +385,8 @@
 			children = (
 				8642C33E1891F86500E4D7FE /* renderer.h */,
 				8642C33F1891F86500E4D7FE /* renderer.mm */,
+				057038EF18A3795200326A58 /* ShotGlobals.cpp */,
+				057038F018A3795200326A58 /* ShotGlobals.h */,
 			);
 			name = core;
 			path = GLamorHD2/core;
@@ -519,8 +529,10 @@
 			files = (
 				8642C3461891F86500E4D7FE /* mo_fft.mm in Sources */,
 				05201F231898569B00DB6B0F /* FileWvIn.cpp in Sources */,
+				057038F118A3795200326A58 /* ShotGlobals.cpp in Sources */,
 				8642C3441891F86500E4D7FE /* mo_audio.mm in Sources */,
 				8642C3581891F86500E4D7FE /* renderer.mm in Sources */,
+				057038F418A382ED00326A58 /* mo_accel.mm in Sources */,
 				05201F271898569B00DB6B0F /* Stk.mm in Sources */,
 				8642C2E01891F82000E4D7FE /* main.m in Sources */,
 				8642C34B1891F86500E4D7FE /* mo_touch.mm in Sources */,
@@ -539,7 +551,7 @@
 				05201F441898576800DB6B0F /* OneZero.cpp in Sources */,
 				8642C34A1891F86500E4D7FE /* mo_thread.mm in Sources */,
 				05201F261898569B00DB6B0F /* PluckTwo.cpp in Sources */,
-				0593FEA81895B58A00C29C86 /* SettingsViewController.m in Sources */,
+				0593FEA81895B58A00C29C86 /* SettingsViewController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

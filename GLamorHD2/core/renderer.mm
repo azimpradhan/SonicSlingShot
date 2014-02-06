@@ -5,14 +5,16 @@
 //  Created by Ge Wang on 1/21/14.
 //  Copyright (c) 2014 Ge Wang. All rights reserved.
 //
-
 #import "renderer.h"
 #import "mo_audio.h"
 #import "mo_gfx.h"
 #import "mo_touch.h"
+#import "mo_accel.h"
 #import "Mandolin.h"
 #import "Shakers.h"
 #import <vector>
+#import "ShotGlobals.h"
+
 using namespace std;
 
 
@@ -130,13 +132,21 @@ class TouchObject : public TextureObject{
 
 public:
     TouchObject(GLuint texture) : TextureObject(texture){
+        this->m_increasing = YES;
+        
         
     }
     // update
     virtual void update( double dt )
     {
-        
-        //NSLog(@"I am in update! Touch event is %d", this->touchEvent.phase);
+        if (this->sca.x < 1.5 && this->m_increasing){
+            this->sca.setAll(this->sca.x + dt);
+            if (this->sca.x >= 1.5)this->m_increasing = NO;
+        }
+        else{
+            this->sca.setAll(this->sca.x - dt);
+            if (this->sca.x <= 0.65)this->m_increasing = YES;
+        }
         
         if (this->touchEvent.phase == UITouchPhaseEnded){
             this->active = false;
@@ -146,7 +156,6 @@ public:
             GLfloat ratio = g_gfxWidth / g_gfxHeight;
             GLfloat x = (pt.y / g_gfxWidth * 2 * ratio) - ratio;
             GLfloat y = (pt.x / g_gfxHeight * 2 ) - 1;
-            //NSLog(@"I am in touch phase is moved x is %f, y is %f", x, y);
             
             this->loc.set( x, y, 0 );
             
@@ -156,6 +165,7 @@ public:
 public:
     UITouch *touchEvent;
     UIView *view;
+    BOOL m_increasing;
     
     
 };
@@ -179,27 +189,27 @@ private:
         GLfloat radius = this->sca.x/2;
         
         if (this->loc.x - m_min.x < radius && this->m_vel.x < 0.0){
-            NSLog(@"bumped the left wall");
+            //NSLog(@"bumped the left wall");
             this->m_vel.x = -this->m_vel.x;
             g_wall_sound->noteOn(8.0, 1.0);
 
         }
         if (this->loc.y - m_min.y < radius && this->m_vel.y < 0.0){
-            NSLog(@"bumped the bottom wall");
+            //NSLog(@"bumped the bottom wall");
             this->m_vel.y = -this->m_vel.y;
             g_wall_sound->noteOn(8.0, 1.0);
 
             
         }
         if (m_max.x - this->loc.x < radius && this->m_vel.x > 0.0){
-            NSLog(@"bumped the right wall");
+            //NSLog(@"bumped the right wall");
             this->m_vel.x = -this->m_vel.x;
             g_wall_sound->noteOn(8.0, 1.0);
 
 
         }
         if (m_max.y - this->loc.y < radius && this->m_vel.y > 0.0){
-            NSLog(@"bumped the top wall");
+            //NSLog(@"bumped the top wall");
             this->m_vel.y = -this->m_vel.y;
             g_wall_sound->noteOn(8.0, 1.0);
 
@@ -211,6 +221,9 @@ private:
     
     virtual void update( double dt )
     {
+        m_vel.x += ShotGlobals::x_pull * ShotGlobals::gravity*2.0;
+        m_vel.y += ShotGlobals::y_pull * ShotGlobals::gravity*2.0;
+        m_vel *= (0.75 + 0.25*(1.0-ShotGlobals::damping));
         checkWalls();
         this->loc += m_vel*dt;
         
@@ -240,7 +253,20 @@ Entity * getFreeEntity();
 void renderRubberBand();
 
 
+void accelCallback( double x, double y, double z, void * data )
+{
+    ShotGlobals::x_pull = -y;
+    ShotGlobals::y_pull = x;
+    //NSLog(@"float x %f", x);
+    //NSLog(@"float y %f", y);
+    
+    //NSLog(@"float z %f", z);
+    if (z > 1.0 && g_projectiles.size() > 0){
+        ShotGlobals::clearProjectile = true;
+    }
 
+
+}
 
 
 //-----------------------------------------------------------------------------
@@ -390,6 +416,8 @@ void touch_callback( NSSet * touches, UIView * view,
     }
 }
 
+
+
 // initialize the engine (audio, grx, interaction)
 void GLamorInit()
 {
@@ -419,7 +447,7 @@ void GLamorInit()
     static bool initialized = NO;
     if (!initialized){
         initialized = YES;
-        
+
         // set touch callback
         MoTouch::addCallback( touch_callback, NULL );
         
@@ -430,6 +458,8 @@ void GLamorInit()
         g_wall_sound->controlChange(8, 56.0);
         //g_mandolin->noteOff(0.0);
         //g_mandolin->setFrequency(440.0);
+        MoAccel::addCallback(accelCallback, NULL);
+        MoAccel::setUpdateInterval(0.0);
         
         // init
         bool result = MoAudio::init( SRATE, FRAMESIZE, NUM_CHANNELS );
@@ -575,12 +605,24 @@ void renderWaveform()
     glPopMatrix();
 
 }
+void adjustLocation(ProjectileObject *projectile, float distance){
+    NSLog(@"swap was called");
+    if (projectile->m_vel.x < 0){
+        projectile->loc.x -= distance*2;
+    }
+    else{
+        projectile->loc.x += distance*2;
+    }
+    if (projectile->m_vel.y < 0){
+        projectile->loc.y -= distance*2;
+    }
+    else{
+        projectile->loc.y += distance*2;
+    }
+}
 
 void checkOtherProjectilesForCollisions(){
     
-
-    //NSLog(@"x: %f, y: %f", g_projectiles[i]->loc.x, g_projectiles[i]->loc.y);
-
     for (int first = 0; first < g_projectiles.size(); first++){
         for (int second = first+1; second < g_projectiles.size(); second++){
             ProjectileObject *firstProjectile = g_projectiles[first];
@@ -592,6 +634,22 @@ void checkOtherProjectilesForCollisions(){
                 tmp = firstProjectile->m_vel;
                 firstProjectile->m_vel = secondProjectile->m_vel;
                 secondProjectile->m_vel = tmp;
+                
+                //reset locations to not clash
+
+                float total_overlap = diameter - (firstProjectile->loc - secondProjectile->loc).magnitude();
+                NSLog(@"total overlap is %f", total_overlap);
+                float indiv_overlap = total_overlap/2.0;
+                if (indiv_overlap > 0){
+                    adjustLocation(firstProjectile, indiv_overlap);
+                    adjustLocation(secondProjectile, indiv_overlap);
+                }
+
+                float new_overlap = diameter - (firstProjectile->loc - secondProjectile->loc).magnitude();
+                NSLog(@"total newoverlap is %f", new_overlap);
+            
+                
+
                 g_colliding_sound->noteOn(20.0, 1.0);
             }
         }
@@ -602,9 +660,20 @@ void checkOtherProjectilesForCollisions(){
 
 void renderEntities()
 {
+    
+    if (ShotGlobals::clearProjectile && g_projectiles.size() > 0){
+        vector<ProjectileObject *>::iterator i;
+        for (i = g_projectiles.begin(); i != g_projectiles.end();){
+            (*i)->active = false;
+            i = g_projectiles.erase(i);
+        }
+        ShotGlobals::clearProjectile = false;
+    }
 
     vector<Entity *>::iterator e;
     vector<TouchObject *>::iterator s;
+    
+    
     
     if (g_fingerProjectile != NULL && !g_fingerProjectile->active){
         
@@ -623,9 +692,9 @@ void renderEntities()
             
             g_mandolin->setPluckPosition(pluckPos);
             g_mandolin->setFrequency(freq);
-            NSLog(@"diagonal: %f", diagonal);
-            NSLog(@"length: %f", distance_between_ends);
-            NSLog(@"freq: %f", freq);
+            //NSLog(@"diagonal: %f", diagonal);
+            //NSLog(@"length: %f", distance_between_ends);
+            //NSLog(@"freq: %f", freq);
             g_mandolin->pluck(1.0, pluckPos);
             //and create moving projectile
             
