@@ -131,21 +131,27 @@ public:
 class TouchObject : public TextureObject{
 
 public:
-    TouchObject(GLuint texture) : TextureObject(texture){
+    TouchObject(GLuint texture, BOOL pulsating) : TextureObject(texture){
+        
+        this->m_pulsating = pulsating;
         this->m_increasing = YES;
+        
+
         
         
     }
     // update
     virtual void update( double dt )
     {
-        if (this->sca.x < 1.5 && this->m_increasing){
-            this->sca.setAll(this->sca.x + dt);
-            if (this->sca.x >= 1.5)this->m_increasing = NO;
-        }
-        else{
-            this->sca.setAll(this->sca.x - dt);
-            if (this->sca.x <= 0.65)this->m_increasing = YES;
+        if (this->m_pulsating){
+            if (this->sca.x < 1.5 && this->m_increasing){
+                this->sca.setAll(this->sca.x + dt);
+                if (this->sca.x >= 1.5)this->m_increasing = NO;
+            }
+            else{
+                this->sca.setAll(this->sca.x - dt);
+                if (this->sca.x <= 0.65)this->m_increasing = YES;
+            }
         }
         
         if (this->touchEvent.phase == UITouchPhaseEnded){
@@ -166,6 +172,7 @@ public:
     UITouch *touchEvent;
     UIView *view;
     BOOL m_increasing;
+    BOOL m_pulsating;
     
     
 };
@@ -340,7 +347,7 @@ void touch_callback( NSSet * touches, UIView * view,
                 // find a free one
                 if (g_sling_ends.size() == 2 && g_fingerProjectile == NULL){
                     //create a projectile instead
-                    Entity * e = new TouchObject(g_texture[1]);
+                    Entity * e = new TouchObject(g_texture[1], NO);
                     g_fingerProjectile = (TouchObject *)e;
                     // check
                     if( e != NULL )
@@ -364,7 +371,7 @@ void touch_callback( NSSet * touches, UIView * view,
                 else if (g_sling_ends.size() < 2){
                     
                     //sling end
-                    Entity * e = new TouchObject(g_texture[0]);
+                    Entity * e = new TouchObject(g_texture[0], YES);
                     // check
                     if( e != NULL )
                     {
