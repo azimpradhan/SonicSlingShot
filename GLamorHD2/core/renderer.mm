@@ -648,12 +648,17 @@ void checkOtherProjectilesForCollisions(){
                 float total_overlap = diameter - (firstProjectile->loc - secondProjectile->loc).magnitude();
                 //NSLog(@"total overlap is %f", total_overlap);
                 float indiv_overlap = total_overlap/2.0;
-                if (indiv_overlap > 0){
-                    adjustLocation(firstProjectile, indiv_overlap);
-                    adjustLocation(secondProjectile, indiv_overlap);
+                if (total_overlap > 0){
+                    Vector3D diff_vector = secondProjectile->loc - firstProjectile->loc;
+                    diff_vector *= -indiv_overlap;
+                    firstProjectile->loc += diff_vector;
+                    secondProjectile->loc -= diff_vector;
+                    //adjustLocation(firstProjectile, indiv_overlap);
+                    //adjustLocation(secondProjectile, indiv_overlap);
+                    
                 }
 
-                float new_overlap = diameter - (firstProjectile->loc - secondProjectile->loc).magnitude();
+                //float new_overlap = diameter - (firstProjectile->loc - secondProjectile->loc).magnitude();
                 //NSLog(@"total newoverlap is %f", new_overlap);
             
                 
